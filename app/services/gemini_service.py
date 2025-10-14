@@ -29,8 +29,9 @@ class GeminiService:
         # Configure Gemini
         genai.configure(api_key=self.api_key)
         
-        # Initialize the model
-        self.model = genai.GenerativeModel('gemini-2.5-pro')
+        # Initialize the model - using gemini-1.5-flash for better rate limits
+        # gemini-2.5-flash has higher free tier limits than gemini-2.5-pro
+        self.model = genai.GenerativeModel('gemini-2.5-flash')
         
         # Generation config
         self.generation_config = {
@@ -87,21 +88,38 @@ class GeminiService:
                 safety_settings=self.safety_settings
             )
             
-            # Extract text
-            if response.text:
-                result = response.text.strip()
-                
+            # Extract text - handle different response formats
+            result = None
+            try:
+                # Try simple text accessor first
+                if hasattr(response, 'text') and response.text:
+                    result = response.text.strip()
+            except ValueError:
+                # If response.text fails, use parts accessor
+                if response.candidates and len(response.candidates) > 0:
+                    candidate = response.candidates[0]
+                    if candidate.content and candidate.content.parts:
+                        # Combine all text parts
+                        result = ''.join(part.text for part in candidate.content.parts if hasattr(part, 'text')).strip()
+            
+            if result:
                 # Cache the response
                 if use_cache:
                     self._add_to_cache(prompt, result)
-                
                 return result
             else:
                 return "I apologize, but I couldn't generate an explanation at this time."
                 
         except Exception as e:
-            print(f"Error generating content: {str(e)}")
-            return f"Error: Unable to generate explanation. {str(e)}"
+            error_msg = str(e)
+            
+            # Handle rate limit errors gracefully
+            if '429' in error_msg or 'quota' in error_msg.lower():
+                print(f"⚠️  Gemini rate limit exceeded - using fallback explanation")
+                return None  # Signal to use fallback
+            
+            print(f"Error generating content: {error_msg}")
+            return None  # Signal to use fallback
     
     def _add_to_cache(self, prompt: str, response: str):
         """Add response to cache with size limit"""

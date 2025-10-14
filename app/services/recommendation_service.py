@@ -86,6 +86,12 @@ class RecommendationService:
                         context,
                         reason
                     )
+                    # If Gemini returns None (rate limit or error), use fallback
+                    if explanation is None:
+                        explanation = self._generate_fallback_explanation(
+                            product_dict,
+                            reason
+                        )
                 except Exception as e:
                     print(f"Error generating explanation: {str(e)}")
                     explanation = self._generate_fallback_explanation(
