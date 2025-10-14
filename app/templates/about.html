@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+
+{% block title %}About - Smart Recommender{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-info-circle"></i> About Smart Recommender</h1>
+        <p>AI-powered e-commerce recommendation system</p>
+    </div>
+</section>
+
+<section class="about-section">
+    <div class="container">
+        <div class="about-content">
+            <div class="about-card">
+                <h2><i class="fas fa-bullseye"></i> Project Overview</h2>
+                <p>
+                    Smart Recommender is an advanced e-commerce recommendation system that uses 
+                    machine learning algorithms and AI-powered explanations to help users discover 
+                    products they'll love.
+                </p>
+                <p>
+                    Built with Flask, SQLAlchemy, and Google's Gemini API, this system combines 
+                    collaborative filtering, content-based filtering, and hybrid algorithms to 
+                    provide accurate, personalized recommendations.
+                </p>
+            </div>
+
+            <div class="about-card">
+                <h2><i class="fas fa-robot"></i> Technology Stack</h2>
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <i class="fab fa-python"></i>
+                        <h4>Python & Flask</h4>
+                        <p>Backend framework</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-database"></i>
+                        <h4>SQLite & SQLAlchemy</h4>
+                        <p>Database management</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-brain"></i>
+                        <h4>Google Gemini</h4>
+                        <p>AI explanations</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-code"></i>
+                        <h4>JavaScript</h4>
+                        <p>Frontend interactivity</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-card">
+                <h2><i class="fas fa-cogs"></i> Recommendation Algorithms</h2>
+                
+                <div class="algorithm-item">
+                    <h3><i class="fas fa-users"></i> Collaborative Filtering</h3>
+                    <p>
+                        Finds users with similar taste based on their interaction history 
+                        and recommends products that similar users have enjoyed. Uses 
+                        Jaccard and Cosine similarity metrics.
+                    </p>
+                </div>
+
+                <div class="algorithm-item">
+                    <h3><i class="fas fa-tag"></i> Content-Based Filtering</h3>
+                    <p>
+                        Analyzes user preferences (categories, brands, price range, tags) 
+                        and matches products with similar features. Uses multi-factor 
+                        scoring with weighted components.
+                    </p>
+                </div>
+
+                <div class="algorithm-item">
+                    <h3><i class="fas fa-magic"></i> Hybrid Algorithm</h3>
+                    <p>
+                        Combines both collaborative and content-based approaches with 
+                        configurable weights. Automatically selects the best strategy 
+                        based on user history and data availability.
+                    </p>
+                </div>
+
+                <div class="algorithm-item">
+                    <h3><i class="fas fa-brain"></i> AI Explanations</h3>
+                    <p>
+                        Uses Google's Gemini API to generate natural language explanations 
+                        for each recommendation. Builds context-aware prompts with user 
+                        preferences and product details. Falls back to rule-based 
+                        explanations when API is unavailable.
+                    </p>
+                </div>
+            </div>
+
+            <div class="about-card">
+                <h2><i class="fas fa-chart-line"></i> System Statistics</h2>
+                <div class="stats-list" id="aboutStats">
+                    <div class="spinner"></div>
+                    <p>Loading statistics...</p>
+                </div>
+            </div>
+
+            <div class="about-card">
+                <h2><i class="fas fa-code-branch"></i> Features</h2>
+                <ul class="features-list">
+                    <li><i class="fas fa-check"></i> Multiple recommendation strategies</li>
+                    <li><i class="fas fa-check"></i> AI-powered explanations with Gemini</li>
+                    <li><i class="fas fa-check"></i> Intelligent fallback mode</li>
+                    <li><i class="fas fa-check"></i> Response caching for performance</li>
+                    <li><i class="fas fa-check"></i> RESTful API endpoints</li>
+                    <li><i class="fas fa-check"></i> Interactive web dashboard</li>
+                    <li><i class="fas fa-check"></i> Real-time product similarity</li>
+                    <li><i class="fas fa-check"></i> User preference learning</li>
+                </ul>
+            </div>
+
+            <div class="about-card cta-card">
+                <h2><i class="fas fa-rocket"></i> Ready to Try It?</h2>
+                <p>Experience personalized recommendations powered by AI</p>
+                <a href="{{ url_for('recommendations_page') }}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-star"></i> Get Recommendations
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Load statistics for about page
+    async function loadAboutStats() {
+        try {
+            const response = await fetch('/api/stats');
+            const data = await response.json();
+            
+            if (data.status === 'success') {
+                const stats = data.data;
+                const aboutStats = document.getElementById('aboutStats');
+                
+                aboutStats.innerHTML = `
+                    <div class="stat-row">
+                        <span class="stat-label"><i class="fas fa-box"></i> Total Products:</span>
+                        <span class="stat-value">${stats.products.total}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label"><i class="fas fa-check-circle"></i> Available Products:</span>
+                        <span class="stat-value">${stats.products.available}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label"><i class="fas fa-tag"></i> Products on Sale:</span>
+                        <span class="stat-value">${stats.products.on_sale}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label"><i class="fas fa-dollar-sign"></i> Average Price:</span>
+                        <span class="stat-value">$${stats.products.average_price.toFixed(2)}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label"><i class="fas fa-users"></i> Total Users:</span>
+                        <span class="stat-value">${stats.users.total}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label"><i class="fas fa-chart-line"></i> Total Interactions:</span>
+                        <span class="stat-value">${stats.interactions.total}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label"><i class="fas fa-shopping-cart"></i> Purchases:</span>
+                        <span class="stat-value">${stats.interactions.purchases}</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label"><i class="fas fa-eye"></i> Product Views:</span>
+                        <span class="stat-value">${stats.interactions.views}</span>
+                    </div>
+                `;
+            }
+        } catch (error) {
+            const aboutStats = document.getElementById('aboutStats');
+            aboutStats.innerHTML = '<p class="error-text"><i class="fas fa-exclamation-triangle"></i> Unable to load statistics</p>';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadAboutStats);
+</script>
+{% endblock %}

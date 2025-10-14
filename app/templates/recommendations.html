@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Recommendations - Smart Recommender{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/recommendations.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-star"></i> Personalized Recommendations</h1>
+        <p>Discover products tailored just for you with AI-powered explanations</p>
+    </div>
+</section>
+
+<section class="recommendations-section">
+    <div class="container">
+        <!-- User Selection -->
+        <div class="control-panel">
+            <div class="control-group">
+                <label for="userSelect">
+                    <i class="fas fa-user"></i> Select User
+                </label>
+                <select id="userSelect" class="form-select">
+                    <option value="">Loading users...</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="strategySelect">
+                    <i class="fas fa-cogs"></i> Strategy
+                </label>
+                <select id="strategySelect" class="form-select">
+                    <option value="auto">Auto (Smart Selection)</option>
+                    <option value="hybrid">Hybrid (Combined)</option>
+                    <option value="collaborative">Collaborative Filtering</option>
+                    <option value="content">Content-Based</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <label for="limitSelect">
+                    <i class="fas fa-list"></i> Number of Recommendations
+                </label>
+                <select id="limitSelect" class="form-select">
+                    <option value="3">3 Products</option>
+                    <option value="5" selected>5 Products</option>
+                    <option value="10">10 Products</option>
+                    <option value="15">15 Products</option>
+                </select>
+            </div>
+            
+            <button id="getRecommendations" class="btn btn-primary">
+                <i class="fas fa-magic"></i> Get Recommendations
+            </button>
+        </div>
+
+        <!-- User Info Card -->
+        <div id="userInfo" class="user-info-card" style="display: none;">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="user-details">
+                <h3 id="userName">User Name</h3>
+                <div class="user-stats">
+                    <span><i class="fas fa-shopping-bag"></i> <strong id="userPurchases">0</strong> purchases</span>
+                    <span><i class="fas fa-heart"></i> <strong id="userPreferences">Preferences</strong></span>
+                </div>
+            </div>
+            <div class="strategy-badge" id="strategyBadge">
+                <i class="fas fa-robot"></i> Strategy: <span id="strategyUsed">Auto</span>
+            </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loadingState" class="loading-state" style="display: none;">
+            <div class="spinner"></div>
+            <p>Finding the perfect products for you...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="error-state" style="display: none;">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h3>Oops! Something went wrong</h3>
+            <p id="errorMessage">Unable to load recommendations</p>
+            <button onclick="location.reload()" class="btn btn-secondary">
+                <i class="fas fa-redo"></i> Try Again
+            </button>
+        </div>
+
+        <!-- Recommendations Grid -->
+        <div id="recommendationsGrid" class="recommendations-grid">
+            <!-- Recommendations will be inserted here -->
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="{{ url_for('static', filename='js/recommendations.js') }}"></script>
+{% endblock %}
