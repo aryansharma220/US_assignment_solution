@@ -18,6 +18,7 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False, index=True)
     email = db.Column(db.String(120), unique=True, nullable=False, index=True)
     full_name = db.Column(db.String(200), nullable=True)
+    display_name = db.Column(db.String(100), nullable=True)  # User-friendly display name
     
     # Demographics (for personalization)
     age = db.Column(db.Integer, nullable=True)
@@ -56,6 +57,7 @@ class User(db.Model):
             'username': self.username,
             'email': self.email,
             'full_name': self.full_name,
+            'display_name': self.display_name or self.full_name or self.username,
             'age': self.age,
             'gender': self.gender,
             'location': self.location,

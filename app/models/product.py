@@ -23,7 +23,7 @@ class Product(db.Model):
     # Pricing
     price = db.Column(db.Float, nullable=False)
     original_price = db.Column(db.Float, nullable=True)  # For discounts
-    currency = db.Column(db.String(3), default='USD')
+    currency = db.Column(db.String(3), default='INR')
     
     # Inventory
     stock_quantity = db.Column(db.Integer, default=0)

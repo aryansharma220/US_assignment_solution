@@ -16,36 +16,53 @@
 
 <section class="recommendations-section">
     <div class="container">
+        <!-- Helpful Hint Box -->
+        <div class="hint-box">
+            <i class="fas fa-lightbulb"></i>
+            <div class="hint-box-content">
+                <div class="hint-box-title">How it works</div>
+                <div class="hint-box-text">
+                    Select a user to see personalized recommendations. Our AI analyzes their purchase history and preferences to suggest perfect matches!
+                </div>
+            </div>
+        </div>
+
         <!-- User Selection -->
         <div class="control-panel">
             <div class="control-group">
-                <label for="userSelect">
+                <label for="userSelect" class="tooltip-wrapper">
                     <i class="fas fa-user"></i> Select User
+                    <span class="help-icon">?</span>
+                    <span class="tooltip">Choose a user to get personalized product recommendations</span>
                 </label>
                 <select id="userSelect" class="form-select">
-                    <option value="">Loading users...</option>
+                    <option value="">Choose a user...</option>
                 </select>
             </div>
             
             <div class="control-group">
-                <label for="strategySelect">
+                <label for="strategySelect" class="tooltip-wrapper">
                     <i class="fas fa-cogs"></i> Strategy
+                    <span class="help-icon">?</span>
+                    <span class="tooltip">Auto: Best algorithm picked automatically | Hybrid: Combines multiple methods</span>
                 </label>
                 <select id="strategySelect" class="form-select">
-                    <option value="auto">Auto (Smart Selection)</option>
-                    <option value="hybrid">Hybrid (Combined)</option>
-                    <option value="collaborative">Collaborative Filtering</option>
-                    <option value="content">Content-Based</option>
+                    <option value="auto">🎯 Auto (Recommended)</option>
+                    <option value="hybrid">🔀 Hybrid (Combined)</option>
+                    <option value="collaborative">👥 Collaborative (Similar Users)</option>
+                    <option value="content">📦 Content-Based (Similar Items)</option>
                 </select>
             </div>
             
             <div class="control-group">
-                <label for="limitSelect">
-                    <i class="fas fa-list"></i> Number of Recommendations
+                <label for="limitSelect" class="tooltip-wrapper">
+                    <i class="fas fa-list"></i> Show Results
+                    <span class="help-icon">?</span>
+                    <span class="tooltip">Number of product recommendations to display</span>
                 </label>
                 <select id="limitSelect" class="form-select">
                     <option value="3">3 Products</option>
-                    <option value="5" selected>5 Products</option>
+                    <option value="5" selected>5 Products (Recommended)</option>
                     <option value="10">10 Products</option>
                     <option value="15">15 Products</option>
                 </select>

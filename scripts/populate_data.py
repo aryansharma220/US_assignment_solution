@@ -16,18 +16,19 @@ from app.models import Product, User, UserInteraction
 
 # Sample data for products
 CATEGORIES = {
-    'Electronics': ['Smartphones', 'Laptops', 'Headphones', 'Cameras', 'Smartwatches'],
-    'Fashion': ['T-Shirts', 'Jeans', 'Dresses', 'Shoes', 'Accessories'],
-    'Home & Kitchen': ['Cookware', 'Furniture', 'Decor', 'Appliances', 'Bedding'],
-    'Sports': ['Fitness Equipment', 'Sportswear', 'Outdoor Gear', 'Yoga', 'Cycling'],
-    'Books': ['Fiction', 'Non-Fiction', 'Educational', 'Comics', 'Self-Help'],
-    'Beauty': ['Skincare', 'Makeup', 'Haircare', 'Fragrances', 'Tools'],
-    'Toys': ['Action Figures', 'Board Games', 'Educational', 'Outdoor', 'Puzzles'],
-    'Grocery': ['Snacks', 'Beverages', 'Organic', 'Frozen', 'Dairy']
+    'Electronics': ['Smartphones', 'Laptops', 'Headphones', 'Smart TVs', 'Power Banks'],
+    'Fashion': ['Kurtas', 'Sarees', 'Jeans', 'T-Shirts', 'Ethnic Wear', 'Footwear'],
+    'Home & Kitchen': ['Cookware', 'Mixer Grinders', 'Pressure Cookers', 'Water Purifiers', 'Bedding'],
+    'Sports': ['Cricket Gear', 'Yoga Mats', 'Fitness Equipment', 'Sportswear', 'Badminton'],
+    'Books': ['Fiction', 'Non-Fiction', 'Educational', 'Comics', 'Regional Literature'],
+    'Beauty': ['Ayurvedic Skincare', 'Makeup', 'Haircare', 'Fragrances', 'Herbal Products'],
+    'Toys': ['Educational Toys', 'Board Games', 'Action Figures', 'Outdoor', 'Puzzles'],
+    'Grocery': ['Spices', 'Rice & Pulses', 'Tea & Coffee', 'Snacks', 'Oil & Ghee']
 }
 
-BRANDS = ['Samsung', 'Apple', 'Sony', 'Nike', 'Adidas', 'Zara', 'H&M', 'Levi\'s', 
-          'Canon', 'Nikon', 'Philips', 'LG', 'Dell', 'HP', 'Asus', 'Generic']
+BRANDS = ['Samsung', 'Realme', 'OnePlus', 'Mi', 'Boat', 'Noise', 'Prestige', 'Hawkins', 
+          'FabIndia', 'Biba', 'W', 'Levi\'s', 'Nike', 'Adidas', 'HP', 'Dell', 'Asian Paints',
+          'Tata', 'Patanjali', 'Himalaya', 'Lakme', 'Amul', 'Generic']
 
 COLORS = ['Black', 'White', 'Blue', 'Red', 'Green', 'Gray', 'Silver', 'Gold', 'Pink', 'Purple']
 
@@ -67,8 +68,8 @@ def generate_products(num_products=100):
             brand=brand
         )
         
-        # Generate pricing
-        base_price = round(random.uniform(10, 1000), 2)
+        # Generate pricing (in Indian Rupees)
+        base_price = round(random.uniform(299, 89999), 2)
         is_on_sale = random.random() < 0.3  # 30% chance of sale
         original_price = round(base_price * random.uniform(1.1, 1.5), 2) if is_on_sale else None
         
@@ -114,19 +115,23 @@ def generate_users(num_users=50):
     print(f"\n👥 Generating {num_users} users...")
     users = []
     
-    FIRST_NAMES = ['John', 'Jane', 'Mike', 'Sarah', 'David', 'Emily', 'Chris', 'Lisa', 
-                   'Tom', 'Anna', 'James', 'Mary', 'Robert', 'Linda', 'Michael']
-    LAST_NAMES = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 
-                  'Davis', 'Rodriguez', 'Martinez', 'Hernandez', 'Lopez', 'Wilson']
+    FIRST_NAMES = ['Aryan', 'Priya', 'Rahul', 'Ananya', 'Rohan', 'Diya', 'Aditya', 'Sneha', 
+                   'Arjun', 'Isha', 'Karan', 'Riya', 'Vivek', 'Kavya', 'Siddharth', 'Nisha',
+                   'Amit', 'Pooja', 'Vikram', 'Anjali', 'Raj', 'Neha', 'Akash', 'Preeti']
+    LAST_NAMES = ['Sharma', 'Patel', 'Kumar', 'Singh', 'Gupta', 'Reddy', 'Verma', 
+                  'Joshi', 'Mehta', 'Nair', 'Iyer', 'Das', 'Malhotra', 'Chopra', 'Agarwal']
     GENDERS = ['Male', 'Female', 'Other', 'Prefer not to say']
-    LOCATIONS = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia',
-                 'San Antonio', 'San Diego', 'Dallas', 'San Jose', 'Austin', 'Seattle']
+    LOCATIONS = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata',
+                 'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow', 'Chandigarh', 'Kochi']
     
     for i in range(num_users):
         first_name = random.choice(FIRST_NAMES)
         last_name = random.choice(LAST_NAMES)
         username = f"{first_name.lower()}{last_name.lower()}{random.randint(1, 999)}"
         email = f"{username}@example.com"
+        
+        # Generate display name (user-friendly name for UI)
+        display_name = f"{first_name} {last_name}"
         
         # Generate preferences
         preferred_cats = random.sample(list(CATEGORIES.keys()), k=random.randint(1, 3))
@@ -136,17 +141,18 @@ def generate_users(num_users=50):
             username=username,
             email=email,
             full_name=f"{first_name} {last_name}",
+            display_name=display_name,
             age=random.randint(18, 70),
             gender=random.choice(GENDERS),
             location=random.choice(LOCATIONS),
             preferred_categories=','.join(preferred_cats),
             preferred_brands=','.join(preferred_brands),
-            price_range_min=random.choice([10, 20, 50, 100]),
-            price_range_max=random.choice([200, 500, 1000, 2000]),
+            price_range_min=random.choice([500, 1000, 2000, 5000]),
+            price_range_max=random.choice([10000, 25000, 50000, 100000]),
             is_active=True,
             is_verified=random.random() < 0.8,  # 80% verified
             total_purchases=random.randint(0, 50),
-            total_spent=round(random.uniform(0, 5000), 2),
+            total_spent=round(random.uniform(0, 250000), 2),
             last_active=datetime.utcnow() - timedelta(days=random.randint(0, 30))
         )
         users.append(user)
@@ -223,6 +229,11 @@ def populate_database(num_products=100, num_users=50, num_interactions=500):
     app = create_app()
     
     with app.app_context():
+        # Create tables if they don't exist
+        print("\n🔧 Creating database tables...")
+        db.create_all()
+        print("   ✅ Tables created/verified")
+        
         # Check if data already exists
         existing_products = Product.query.count()
         existing_users = User.query.count()
@@ -259,7 +270,7 @@ def populate_database(num_products=100, num_users=50, num_interactions=500):
         print(f"   Users: {User.query.count()}")
         print(f"   Interactions: {UserInteraction.query.count()}")
         print("\n📈 Sample statistics:")
-        print(f"   Average product price: ${Product.query.with_entities(db.func.avg(Product.price)).scalar():.2f}")
+        print(f"   Average product price: ₹{Product.query.with_entities(db.func.avg(Product.price)).scalar():.2f}")
         print(f"   Products on sale: {Product.query.filter(Product.original_price.isnot(None)).count()}")
         print(f"   Active users: {User.query.filter_by(is_active=True).count()}")
         print(f"   Total purchases: {UserInteraction.query.filter_by(interaction_type='purchase').count()}")

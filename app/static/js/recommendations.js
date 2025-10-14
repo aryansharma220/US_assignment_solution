@@ -42,9 +42,11 @@ function populateUserSelect() {
     }
     
     select.innerHTML = '<option value="">Select a user...</option>' +
-        allUsers.map(user => 
-            `<option value="${user.id}">${user.username} (${user.total_purchases} purchases)</option>`
-        ).join('');
+        allUsers.map(user => {
+            // Use display_name for user-friendly display, fallback to full_name or username
+            const displayName = user.display_name || user.full_name || user.username;
+            return `<option value="${user.id}">${displayName} (${user.total_purchases} purchases)</option>`;
+        }).join('');
 }
 
 // Setup event listeners
@@ -70,14 +72,16 @@ async function handleGetRecommendations() {
     const limit = parseInt($('#limitSelect').value);
     
     if (!userId) {
-        showNotification('Please select a user', 'error');
+        showNotification('👤 Please select a user first!', 'error');
         return;
     }
     
-    // Show loading
+    // Show loading with helpful message
     showLoadingState();
     hideUserInfo();
     hideError();
+    
+    showNotification('🔍 Analyzing preferences and generating recommendations...', 'info');
     
     try {
         const data = await fetchAPI(
@@ -89,13 +93,16 @@ async function handleGetRecommendations() {
             displayUserInfo(data.data);
             displayRecommendations(data.data);
             hideLoading();
+            
+            // Success notification
+            showNotification(`✨ Found ${data.data.count} perfect matches for ${data.data.user.username}!`, 'success');
         } else {
             throw new Error(data.message || 'Failed to get recommendations');
         }
     } catch (error) {
         hideLoading();
         displayError(error.message);
-        showNotification('Failed to load recommendations', 'error');
+        showNotification('❌ Oops! Something went wrong. Please try again.', 'error');
     }
 }
 
@@ -240,6 +247,12 @@ function showLoadingState() {
     const loading = $('#loadingState');
     loading.style.display = 'block';
     $('#recommendationsGrid').innerHTML = '';
+    
+    // Update loading text with helpful message
+    const loadingText = loading.querySelector('.loading-text');
+    if (loadingText) {
+        loadingText.textContent = 'Analyzing user preferences and finding perfect matches...';
+    }
 }
 
 function hideLoading() {
@@ -252,8 +265,18 @@ function hideUserInfo() {
 
 function displayError(message) {
     const errorState = $('#errorState');
-    $('#errorMessage').textContent = message;
+    const errorMsg = $('#errorMessage');
+    errorMsg.textContent = message || 'Something went wrong. Please try again.';
     errorState.style.display = 'block';
+    
+    // Add helpful suggestion
+    const suggestionText = document.createElement('p');
+    suggestionText.style.marginTop = '1rem';
+    suggestionText.style.color = 'var(--text-secondary)';
+    suggestionText.innerHTML = '<i class="fas fa-info-circle"></i> Try selecting a different user or strategy';
+    if (!errorState.querySelector('p:last-child')?.textContent.includes('Try selecting')) {
+        errorState.querySelector('.error-content')?.appendChild(suggestionText);
+    }
 }
 
 function hideError() {

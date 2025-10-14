@@ -16,11 +16,24 @@
 
 <section class="products-section">
     <div class="container">
+        <!-- Helpful Hint -->
+        <div class="hint-box">
+            <i class="fas fa-info-circle"></i>
+            <div class="hint-box-content">
+                <div class="hint-box-title">Browse & Discover</div>
+                <div class="hint-box-text">
+                    Use filters to narrow down products by category or price. Click on any product to see detailed information!
+                </div>
+            </div>
+        </div>
+
         <!-- Filters -->
         <div class="filters-panel">
             <div class="filter-group">
-                <label for="categoryFilter">
+                <label for="categoryFilter" class="tooltip-wrapper">
                     <i class="fas fa-filter"></i> Category
+                    <span class="help-icon">?</span>
+                    <span class="tooltip">Filter products by category - Electronics, Fashion, Home, etc.</span>
                 </label>
                 <select id="categoryFilter" class="form-select">
                     <option value="">All Categories</option>
@@ -28,19 +41,21 @@
             </div>
             
             <div class="filter-group">
-                <label for="sortSelect">
+                <label for="sortSelect" class="tooltip-wrapper">
                     <i class="fas fa-sort"></i> Sort By
+                    <span class="help-icon">?</span>
+                    <span class="tooltip">Sort products by name, price, or rating</span>
                 </label>
                 <select id="sortSelect" class="form-select">
-                    <option value="name">Name</option>
-                    <option value="price-asc">Price: Low to High</option>
-                    <option value="price-desc">Price: High to Low</option>
-                    <option value="rating">Rating</option>
+                    <option value="name">📝 Name (A-Z)</option>
+                    <option value="price-asc">💰 Price: Low to High</option>
+                    <option value="price-desc">💎 Price: High to Low</option>
+                    <option value="rating">⭐ Rating (Best First)</option>
                 </select>
             </div>
             
             <div class="search-group">
-                <input type="text" id="searchInput" class="form-input" placeholder="Search products...">
+                <input type="text" id="searchInput" class="form-input" placeholder="🔍 Search products by name...">
                 <i class="fas fa-search"></i>
             </div>
         </div>
