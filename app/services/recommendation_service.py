@@ -21,7 +21,6 @@ class RecommendationService:
             self.gemini = get_gemini_service()
             self.gemini_available = True
         except ValueError as e:
-            print(f"Warning: Gemini not available - {str(e)}")
             self.gemini_available = False
     
     def get_recommendations_with_explanations(
@@ -93,7 +92,6 @@ class RecommendationService:
                             reason
                         )
                 except Exception as e:
-                    print(f"Error generating explanation: {str(e)}")
                     explanation = self._generate_fallback_explanation(
                         product_dict,
                         reason

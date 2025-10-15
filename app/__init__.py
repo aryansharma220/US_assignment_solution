@@ -1,38 +1,35 @@
 """
-Application factory for E-commerce Product Recommender
+Application factory for ShopSmart AI
 """
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
-from config import Config
+from config import config
 
 # Initialize extensions
 db = SQLAlchemy()
 
 
-def create_app(config_class=Config):
+def create_app(config_name=None):
     """
     Application factory pattern
     
     Args:
-        config_class: Configuration class to use
+        config_name: Configuration environment ('development', 'production', 'testing')
         
     Returns:
         Flask application instance
     """
+    # Determine configuration
+    if config_name is None:
+        config_name = os.getenv('FLASK_ENV', 'production')
+    
     app = Flask(__name__)
-    app.config.from_object(config_class)
+    app.config.from_object(config[config_name])
     
-    # Initialize extensions with app
+    # Initialize extensions
     db.init_app(app)
-    CORS(app)
-    
-    # Validate configuration
-    with app.app_context():
-        Config.validate()
-    
-    # Register blueprints (will be added in later steps)
-    # from app.routes import main_bp
-    # app.register_blueprint(main_bp)
+    CORS(app, origins=app.config['CORS_ORIGINS'])
     
     return app

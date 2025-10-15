@@ -28,7 +28,6 @@ async function loadUsers() {
         }
     } catch (error) {
         showNotification('Failed to load users', 'error');
-        console.error(error);
     }
 }
 
@@ -239,7 +238,6 @@ function createRecommendationCard(rec, rank) {
 // Show similar products (opens in modal or navigates)
 function showSimilarProducts(productId) {
     showNotification(`Finding similar products to #${productId}...`, 'info');
-    // TODO: Implement similar products modal
 }
 
 // UI State Management

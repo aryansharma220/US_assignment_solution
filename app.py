@@ -1,22 +1,23 @@
 """
-Main application entry point for E-commerce Product Recommender
+ShopSmart AI - Intelligent E-commerce Recommendation Platform
+Production-ready Flask application with AI-powered product recommendations
 """
 from flask import request, jsonify, render_template
 from app import create_app, db
 from app.models import Product, User, UserInteraction
 from app.services.recommendation_service import RecommendationService
 from app.services.gemini_service import GeminiService
-from config import Config
+from config import config
 from sqlalchemy import func
+import os
 import json
 
-# Create Flask application
-app = create_app()
+# Create Flask application with appropriate configuration
+config_name = os.getenv('FLASK_ENV', 'production')
+app = create_app(config_name)
 
 
-# ============================================================================
-# FRONTEND ROUTES
-# ============================================================================
+# Frontend Routes
 
 @app.route('/')
 def index_page():
@@ -42,9 +43,7 @@ def about_page():
     return render_template('about.html')
 
 
-# ============================================================================
-# API ROUTES
-# ============================================================================
+# API Routes
 
 @app.route('/api')
 def index():
@@ -509,9 +508,7 @@ def get_budget_suggestions():
         return {'status': 'error', 'message': str(e)}, 500
 
 
-# ============================================================================
-# PHASE 4: GEMINI AI ENHANCEMENT ENDPOINTS
-# ============================================================================
+# AI Enhancement Endpoints
 
 @app.route('/api/products/<int:product_id>/ai-description')
 def get_ai_product_description(product_id):
@@ -795,9 +792,7 @@ def get_user(user_id):
         return {'status': 'error', 'message': str(e)}, 404
 
 
-# ============================================================================
-# RECOMMENDATION ENDPOINTS WITH GEMINI LLM EXPLANATIONS
-# ============================================================================
+# Recommendation Endpoints
 
 @app.route('/api/recommend/<int:user_id>', methods=['GET'])
 def get_recommendations(user_id):
@@ -914,20 +909,10 @@ def test_gemini():
 
 if __name__ == '__main__':
     with app.app_context():
-        # Create database tables
         db.create_all()
-        print("✅ Database tables created successfully!")
-    
-    print(f"🚀 Starting E-commerce Product Recommender API...")
-    print(f"📍 Running on http://{Config.HOST}:{Config.PORT}")
-    print(f"🔧 Debug mode: {Config.DEBUG}")
-    
-    if not Config.GEMINI_API_KEY:
-        print("⚠️  WARNING: Gemini API key not configured!")
-        print("   Please set GEMINI_API_KEY in your .env file")
     
     app.run(
-        host=Config.HOST,
-        port=Config.PORT,
-        debug=Config.DEBUG
+        host=app.config['HOST'],
+        port=app.config['PORT'],
+        debug=app.config['DEBUG']
     )

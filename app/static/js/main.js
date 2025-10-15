@@ -28,7 +28,6 @@ async function fetchAPI(endpoint, options = {}) {
         
         return data;
     } catch (error) {
-        console.error('API Error:', error);
         throw error;
     }
 }
@@ -170,6 +169,5 @@ window.AppUtils = {
 
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 ShopSmart AI Initialized');
     initTooltips();
 });

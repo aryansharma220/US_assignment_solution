@@ -115,10 +115,8 @@ class GeminiService:
             
             # Handle rate limit errors gracefully
             if '429' in error_msg or 'quota' in error_msg.lower():
-                print(f"⚠️  Gemini rate limit exceeded - using fallback explanation")
                 return None  # Signal to use fallback
             
-            print(f"Error generating content: {error_msg}")
             return None  # Signal to use fallback
     
     def _add_to_cache(self, prompt: str, response: str):
@@ -326,7 +324,6 @@ Write an engaging 1-sentence summary that highlights the key appeal:"""
             )
             return 'successful' in response.lower() or len(response) > 0
         except Exception as e:
-            print(f"Connection test failed: {str(e)}")
             return False
 
     def generate_product_description(self, product_context: Dict[str, Any], target_market: str = 'Indian') -> str:
@@ -374,7 +371,6 @@ Write an engaging 1-sentence summary that highlights the key appeal:"""
             return response if response else "Enhanced description not available at this time."
             
         except Exception as e:
-            print(f"Error generating product description: {e}")
             return "Enhanced description not available at this time."
 
     def analyze_sentiment(self, reviews: List[str], product_name: str, product_category: str) -> Dict[str, Any]:
@@ -428,7 +424,6 @@ Write an engaging 1-sentence summary that highlights the key appeal:"""
             }
             
         except Exception as e:
-            print(f"Error analyzing sentiment: {e}")
             return {
                 'overall_sentiment_score': 50,
                 'sentiment_distribution': {'positive': 50, 'neutral': 30, 'negative': 20},
@@ -487,7 +482,6 @@ Write an engaging 1-sentence summary that highlights the key appeal:"""
             return response if response else "I'm sorry, I couldn't process your question at this time. Please try again or contact customer support."
             
         except Exception as e:
-            print(f"Error answering product question: {e}")
             return "I'm sorry, I couldn't process your question at this time. Please try again or contact customer support."
 
     def general_shopping_assistant(self, message: str, conversation_id: Optional[str] = None) -> str:
@@ -528,7 +522,6 @@ Write an engaging 1-sentence summary that highlights the key appeal:"""
             return response if response else "I'm here to help with your shopping! Could you please rephrase your question?"
             
         except Exception as e:
-            print(f"Error in general shopping assistant: {e}")
             return "I'm having trouble right now, but I'm here to help with your shopping needs! Please try again."
 
     def parse_natural_search(self, query: str) -> Dict[str, Any]:
@@ -618,7 +611,6 @@ Write an engaging 1-sentence summary that highlights the key appeal:"""
             return parsed_params
             
         except Exception as e:
-            print(f"Error parsing natural search: {e}")
             return {
                 'category': None,
                 'min_price': None,
