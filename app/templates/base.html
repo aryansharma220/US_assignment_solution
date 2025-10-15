@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}E-commerce Recommender{% endblock %}</title>
+    <title>{% block title %}ShopSmart AI - Intelligent Shopping Experience{% endblock %}</title>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -21,8 +21,8 @@
     <nav class="navbar">
         <div class="container">
             <div class="nav-brand">
-                <i class="fas fa-shopping-bag"></i>
-                <span>Smart Recommender</span>
+                <i class="fas fa-brain"></i>
+                <span>ShopSmart AI</span>
             </div>
             <ul class="nav-menu">
                 <li><a href="{{ url_for('index_page') }}" class="nav-link {% if request.endpoint == 'index_page' %}active{% endif %}">
@@ -51,7 +51,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3><i class="fas fa-shopping-bag"></i> Smart Recommender</h3>
+                    <h3><i class="fas fa-brain"></i> ShopSmart AI</h3>
                     <p>AI-powered product recommendations using Gemini LLM</p>
                 </div>
                 <div class="footer-section">
@@ -74,13 +74,77 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Smart Recommender. Powered by Gemini AI.</p>
+                <p>&copy; 2025 ShopSmart AI. Powered by Gemini AI.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Floating Chatbot Widget -->
+    <div id="chatbotWidget" class="chatbot-widget">
+        <!-- Chat Toggle Button -->
+        <div id="chatToggle" class="chat-toggle" onclick="toggleChatbot()">
+            <i class="fas fa-comments"></i>
+            <span class="chat-badge" id="chatBadge">AI</span>
+        </div>
+        
+        <!-- Chat Window -->
+        <div id="chatWindow" class="chat-window hidden">
+            <div class="chat-header">
+                <div class="chat-header-info">
+                    <div class="chat-avatar">🤖</div>
+                    <div class="chat-header-text">
+                        <h4>ShopBot AI</h4>
+                        <span class="chat-status">Online • Ready to help</span>
+                    </div>
+                </div>
+                <button class="chat-close" onclick="toggleChatbot()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="chat-body" id="chatBody">
+                <div class="chat-message bot-message">
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">
+                        <p>Hi! I'm ShopBot, your AI shopping assistant! 👋</p>
+                        <p>I can help you with:</p>
+                        <ul>
+                            <li>🔍 Finding products</li>
+                            <li>💰 Budget recommendations</li>
+                            <li>📊 Product comparisons</li>
+                            <li>❓ Shopping questions</li>
+                        </ul>
+                        <p>Try asking: "Show me budget phones under ₹20,000" or "What's trending in electronics?"</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-footer">
+                <div class="chat-input-container">
+                    <input type="text" id="chatbotInput" placeholder="Ask me anything about shopping..." 
+                           onkeypress="if(event.key==='Enter') sendChatbotMessage()">
+                    <button id="chatbotSend" onclick="sendChatbotMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="chat-suggestions">
+                    <button class="suggestion-chip" onclick="sendSuggestion('Show me trending products')">
+                        🔥 Trending
+                    </button>
+                    <button class="suggestion-chip" onclick="sendSuggestion('Budget phones under 20k')">
+                        📱 Budget Phones
+                    </button>
+                    <button class="suggestion-chip" onclick="sendSuggestion('Best laptops for students')">
+                        💻 Student Laptops
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Custom JavaScript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
     {% block extra_scripts %}{% endblock %}
 </body>
 </html>

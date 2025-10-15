@@ -170,6 +170,6 @@ window.AppUtils = {
 
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 Smart Recommender Initialized');
+    console.log('🚀 ShopSmart AI Initialized');
     initTooltips();
 });

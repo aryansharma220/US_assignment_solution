@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Products - Smart Recommender{% endblock %}
+{% block title %}Products - ShopSmart AI{% endblock %}
 
 {% block extra_head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
@@ -27,53 +27,143 @@
             </div>
         </div>
 
-        <!-- Filters -->
-        <div class="filters-panel">
-            <div class="filter-group">
-                <label for="categoryFilter" class="tooltip-wrapper">
-                    <i class="fas fa-filter"></i> Category
-                    <span class="help-icon">?</span>
-                    <span class="tooltip">Filter products by category - Electronics, Fashion, Home, etc.</span>
-                </label>
-                <select id="categoryFilter" class="form-select">
-                    <option value="">All Categories</option>
-                </select>
+        <!-- Trending Products Section -->
+        <div id="trendingSection" class="trending-section">
+            <div class="recommendation-header">
+                <h2>🔥 Trending Now</h2>
+                <p class="recommendation-subtitle">Popular products in your area</p>
             </div>
-            
-            <div class="filter-group">
-                <label for="sortSelect" class="tooltip-wrapper">
-                    <i class="fas fa-sort"></i> Sort By
-                    <span class="help-icon">?</span>
-                    <span class="tooltip">Sort products by name, price, or rating</span>
-                </label>
-                <select id="sortSelect" class="form-select">
-                    <option value="name">📝 Name (A-Z)</option>
-                    <option value="price-asc">💰 Price: Low to High</option>
-                    <option value="price-desc">💎 Price: High to Low</option>
-                    <option value="rating">⭐ Rating (Best First)</option>
-                </select>
-            </div>
-            
-            <div class="search-group">
-                <input type="text" id="searchInput" class="form-input" placeholder="🔍 Search products by name...">
-                <i class="fas fa-search"></i>
+            <div class="recommendation-carousel">
+                <div id="trendingProducts" class="recommendation-grid">
+                    <!-- Trending products will be loaded here -->
+                </div>
             </div>
         </div>
 
-        <!-- Loading State -->
-        <div id="loadingProducts" class="loading-state">
-            <div class="spinner"></div>
-            <p>Loading products...</p>
-        </div>
+        <!-- Advanced Filters Section -->
+        <div class="filters-container">
+            <!-- Left Sidebar Filters -->
+            <aside class="filters-sidebar">
+                <div class="filters-header">
+                    <h3><i class="fas fa-sliders-h"></i> Filters</h3>
+                    <button id="clearAllFilters" class="btn-clear-filters">Clear All</button>
+                </div>
 
-        <!-- Products Grid -->
-        <div id="productsGrid" class="products-grid">
-            <!-- Products will be inserted here -->
-        </div>
+                <!-- Price Range Filter -->
+                <div class="filter-section">
+                    <h4><i class="fas fa-rupee-sign"></i> Price Range</h4>
+                    <div class="price-range-slider">
+                        <input type="range" id="priceMin" min="299" max="89999" value="299" step="100">
+                        <input type="range" id="priceMax" min="299" max="89999" value="89999" step="100">
+                    </div>
+                    <div class="price-range-display">
+                        <span id="priceMinDisplay">₹299</span>
+                        <span>-</span>
+                        <span id="priceMaxDisplay">₹89,999</span>
+                    </div>
+                </div>
 
-        <!-- Pagination -->
-        <div id="pagination" class="pagination">
-            <!-- Pagination will be inserted here -->
+                <!-- Brand Filter -->
+                <div class="filter-section">
+                    <h4><i class="fas fa-tag"></i> Brands</h4>
+                    <div class="search-box">
+                        <input type="text" id="brandSearch" placeholder="Search brands..." class="form-input-sm">
+                    </div>
+                    <div id="brandFilters" class="checkbox-group">
+                        <!-- Brand checkboxes will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Rating Filter -->
+                <div class="filter-section">
+                    <h4><i class="fas fa-star"></i> Rating</h4>
+                    <div class="rating-filters">
+                        <label class="radio-label">
+                            <input type="radio" name="rating" value="4">
+                            <span>⭐⭐⭐⭐ 4 & above</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="rating" value="3">
+                            <span>⭐⭐⭐ 3 & above</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="rating" value="2">
+                            <span>⭐⭐ 2 & above</span>
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="rating" value="">
+                            <span>All Ratings</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Category Filter -->
+                <div class="filter-section">
+                    <h4><i class="fas fa-th-large"></i> Category</h4>
+                    <select id="categoryFilter" class="form-select">
+                        <option value="">All Categories</option>
+                    </select>
+                </div>
+
+                <!-- Stock Filter -->
+                <div class="filter-section">
+                    <h4><i class="fas fa-warehouse"></i> Availability</h4>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="inStockOnly">
+                        <span>In Stock Only</span>
+                    </label>
+                </div>
+            </aside>
+
+            <!-- Main Products Area -->
+            <div class="products-main">
+                <!-- Top Bar with Search, Sort, and Active Filters -->
+                <div class="products-toolbar">
+                    <div class="search-sort-group">
+                        <div class="search-box-large">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="searchInput" class="form-input" placeholder="Search products...">
+                        </div>
+                        
+                        <div class="sort-group">
+                            <label for="sortSelect"><i class="fas fa-sort"></i> Sort:</label>
+                            <select id="sortSelect" class="form-select">
+                                <option value="newest">🆕 Newest First</option>
+                                <option value="popular">🔥 Most Popular</option>
+                                <option value="price_asc">💰 Price: Low to High</option>
+                                <option value="price_desc">💎 Price: High to Low</option>
+                                <option value="rating">⭐ Highest Rated</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Results Count -->
+                    <div id="resultsCount" class="results-count">
+                        Showing <strong id="resultCount">0</strong> of <strong id="totalCount">0</strong> products
+                    </div>
+
+                    <!-- Active Filter Tags -->
+                    <div id="activeFilters" class="active-filters">
+                        <!-- Active filter chips will appear here -->
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loadingProducts" class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Loading products...</p>
+                </div>
+
+                <!-- Products Grid -->
+                <div id="productsGrid" class="products-grid">
+                    <!-- Products will be inserted here -->
+                </div>
+
+                <!-- Pagination -->
+                <div id="pagination" class="pagination">
+                    <!-- Pagination will be inserted here -->
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -84,6 +174,35 @@
         <span class="modal-close">&times;</span>
         <div id="productDetail">
             <!-- Product details will be inserted here -->
+        </div>
+        
+        <!-- Recommendation Sections -->
+        <div id="recommendationSections" class="recommendation-sections">
+            <!-- Similar Products -->
+            <div id="similarProductsSection" class="recommendation-section">
+                <div class="recommendation-header">
+                    <h3>🔍 Similar Products</h3>
+                    <p class="recommendation-subtitle">Products like this one</p>
+                </div>
+                <div class="recommendation-carousel">
+                    <div id="similarProducts" class="recommendation-grid">
+                        <!-- Similar products will be loaded here -->
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Frequently Bought Together -->
+            <div id="frequentlyBoughtSection" class="recommendation-section">
+                <div class="recommendation-header">
+                    <h3>🛒 Frequently Bought Together</h3>
+                    <p class="recommendation-subtitle">Customers who bought this also bought</p>
+                </div>
+                <div class="recommendation-carousel">
+                    <div id="frequentlyBought" class="recommendation-grid">
+                        <!-- Frequently bought products will be loaded here -->
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

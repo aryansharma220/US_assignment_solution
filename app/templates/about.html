@@ -1,60 +1,124 @@
 {% extends "base.html" %}
 
-{% block title %}About - Smart Recommender{% endblock %}
+{% block title %}About - ShopSmart AI{% endblock %}
 
 {% block content %}
 <section class="page-header">
     <div class="container">
-        <h1><i class="fas fa-info-circle"></i> About Smart Recommender</h1>
-        <p>AI-powered e-commerce recommendation system</p>
+        <h1><i class="fas fa-brain"></i> About ShopSmart AI</h1>
+        <p>Revolutionizing shopping with artificial intelligence</p>
     </div>
 </section>
 
 <section class="about-section">
     <div class="container">
         <div class="about-content">
-            <div class="about-card">
-                <h2><i class="fas fa-bullseye"></i> Project Overview</h2>
-                <p>
-                    Smart Recommender is an advanced e-commerce recommendation system that uses 
-                    machine learning algorithms and AI-powered explanations to help users discover 
-                    products they'll love.
+            <!-- Hero Story Section -->
+            <div class="about-card featured">
+                <h2><i class="fas fa-rocket"></i> Our Story</h2>
+                <p class="lead">
+                    ShopSmart AI was born from a simple yet powerful vision: to make online shopping 
+                    as intelligent and personalized as having your own personal shopping assistant.
                 </p>
                 <p>
-                    Built with Flask, SQLAlchemy, and Google's Gemini API, this system combines 
-                    collaborative filtering, content-based filtering, and hybrid algorithms to 
-                    provide accurate, personalized recommendations.
+                    In today's digital marketplace, millions of products compete for attention. 
+                    We realized that what shoppers really need isn't more choices, but smarter choices. 
+                    That's why we built ShopSmart AI - an intelligent platform that understands your 
+                    preferences, learns from your behavior, and helps you discover products that 
+                    truly match your needs and budget.
                 </p>
             </div>
 
+            <!-- Mission & Vision -->
+            <div class="mission-vision">
+                <div class="about-card">
+                    <h2><i class="fas fa-bullseye"></i> Our Mission</h2>
+                    <p>
+                        To democratize intelligent shopping by making AI-powered product recommendations 
+                        accessible to every online shopper, helping them save time, money, and make 
+                        better purchasing decisions.
+                    </p>
+                </div>
+                <div class="about-card">
+                    <h2><i class="fas fa-eye"></i> Our Vision</h2>
+                    <p>
+                        To become India's most trusted AI shopping companion, where every product 
+                        recommendation feels like it came from a friend who truly understands your 
+                        style, needs, and budget.
+                    </p>
+                </div>
+            </div>
+
+            <!-- What Makes Us Different -->
             <div class="about-card">
-                <h2><i class="fas fa-robot"></i> Technology Stack</h2>
-                <div class="tech-grid">
-                    <div class="tech-item">
-                        <i class="fab fa-python"></i>
-                        <h4>Python & Flask</h4>
-                        <p>Backend framework</p>
-                    </div>
-                    <div class="tech-item">
-                        <i class="fas fa-database"></i>
-                        <h4>SQLite & SQLAlchemy</h4>
-                        <p>Database management</p>
-                    </div>
-                    <div class="tech-item">
+                <h2><i class="fas fa-star"></i> What Makes ShopSmart AI Different</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
                         <i class="fas fa-brain"></i>
-                        <h4>Google Gemini</h4>
-                        <p>AI explanations</p>
+                        <h4>AI-Powered Intelligence</h4>
+                        <p>Our advanced algorithms learn from millions of shopping patterns to understand what you really want.</p>
                     </div>
-                    <div class="tech-item">
-                        <i class="fas fa-code"></i>
-                        <h4>JavaScript</h4>
-                        <p>Frontend interactivity</p>
+                    <div class="feature-item">
+                        <i class="fas fa-comments"></i>
+                        <h4>Conversational Shopping</h4>
+                        <p>Chat with our AI assistant in natural language - just like talking to a knowledgeable friend.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-heart"></i>
+                        <h4>Personalized Experience</h4>
+                        <p>Every recommendation is tailored to your unique preferences, budget, and shopping history.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-rupee-sign"></i>
+                        <h4>Smart Budget Optimization</h4>
+                        <p>Find the best value products within your budget, with intelligent price comparison and deal alerts.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Trust & Transparency</h4>
+                        <p>Every recommendation comes with clear explanations, so you understand why we suggested it.</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h4>Seamless Experience</h4>
+                        <p>Beautiful, responsive design that works perfectly on all your devices.</p>
                     </div>
                 </div>
             </div>
 
             <div class="about-card">
-                <h2><i class="fas fa-cogs"></i> Recommendation Algorithms</h2>
+                <h2><i class="fas fa-cogs"></i> Our Technology</h2>
+                <p class="lead">
+                    ShopSmart AI is built on cutting-edge technology that combines traditional recommendation algorithms 
+                    with modern AI to deliver an exceptional shopping experience.
+                </p>
+                
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <i class="fab fa-python"></i>
+                        <h4>Python & Flask</h4>
+                        <p>Robust backend architecture with RESTful APIs</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-database"></i>
+                        <h4>SQLite Database</h4>
+                        <p>Efficient data storage and retrieval</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fab fa-js-square"></i>
+                        <h4>JavaScript</h4>
+                        <p>Interactive frontend experience</p>
+                    </div>
+                    <div class="tech-item">
+                        <i class="fas fa-brain"></i>
+                        <h4>Google Gemini AI</h4>
+                        <p>Natural language explanations</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-card">
+                <h2><i class="fas fa-magic"></i> AI Recommendation Engine</h2>
                 
                 <div class="algorithm-item">
                     <h3><i class="fas fa-users"></i> Collaborative Filtering</h3>
@@ -154,8 +218,8 @@
                         <span class="stat-value">${stats.products.on_sale}</span>
                     </div>
                     <div class="stat-row">
-                        <span class="stat-label"><i class="fas fa-dollar-sign"></i> Average Price:</span>
-                        <span class="stat-value">$${stats.products.average_price.toFixed(2)}</span>
+                        <span class="stat-label"><i class="fas fa-rupee-sign"></i> Average Price:</span>
+                        <span class="stat-value">₹${stats.products.average_price.toFixed(2)}</span>
                     </div>
                     <div class="stat-row">
                         <span class="stat-label"><i class="fas fa-users"></i> Total Users:</span>
