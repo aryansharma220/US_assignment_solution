@@ -45,6 +45,15 @@ def about_page():
 
 # API Routes
 
+@app.route('/health')
+def health_check():
+    """Railway health check endpoint"""
+    return {
+        'status': 'healthy',
+        'service': 'ShopSmart AI',
+        'version': '2.0.0'
+    }
+
 @app.route('/api')
 def index():
     """API health check endpoint"""
